@@ -18,12 +18,16 @@ import java.util.Collections;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String fullName;
+    private Long idUser;
+    @Column
     private String username;
+    @Column
     private String password;
+    @Column
     private String email;
+    @Column
     private String phone;
+    @Column
     private Role role;
 
     @Override
