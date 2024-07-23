@@ -1,6 +1,9 @@
 package com.hello_event.model;
 
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDate;
 
 @Entity
