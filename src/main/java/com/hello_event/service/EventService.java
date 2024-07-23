@@ -20,7 +20,7 @@ public class EventService {
     private final EventRepository eventRepository;
 
     public List<Event> getAll() {
-        var events = eventRepository.findAll();
+        List<Event> events = eventRepository.findAll();
         if (events.isEmpty()) {
             throw new DatabaseEmptyException();
         }
