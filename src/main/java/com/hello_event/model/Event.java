@@ -1,6 +1,5 @@
 package com.hello_event.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 

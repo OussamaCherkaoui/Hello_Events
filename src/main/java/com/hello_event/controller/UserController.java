@@ -1,6 +1,7 @@
 package com.hello_event.controller;
 
 
+import com.hello_event.enums.Role;
 import com.hello_event.exception.DatabaseEmptyException;
 import com.hello_event.exception.UserNotFoundException;
 import com.hello_event.model.User;
