@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class TeamInfoService {
-    @Autowired
+
     private final TeamInfoRepository teamInfoRepository;
 
     public List<TeamInfo> getTeamsInfo() {
