@@ -3,9 +3,10 @@ package com.hello_event.service;
 import com.hello_event.exception.DatabaseEmptyException;
 import com.hello_event.model.Contact;
 import com.hello_event.model.User;
+import com.hello_event.model.Contact;
+import com.hello_event.model.Ticket;
 import com.hello_event.repository.ContactRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,10 @@ public class ContactService {
             throw new DatabaseEmptyException();
         }
         return contacts;
+    }
+
+    public Contact save(Contact contact) {
+        return contactRepository.save(contact);
     }
 
 }
