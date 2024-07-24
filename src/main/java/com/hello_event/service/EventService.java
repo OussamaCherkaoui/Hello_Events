@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,7 +21,7 @@ public class EventService {
     private final EventRepository eventRepository;
 
     public List<Event> getAll() {
-        var events = eventRepository.findAll();
+        List<Event> events = eventRepository.findAll();
         if (events.isEmpty()) {
             throw new DatabaseEmptyException();
         }
@@ -42,4 +43,26 @@ public class EventService {
         eventRepository.delete(event);
         return event;
     }
+    public List<Event> getAllByDate(LocalDate date) {
+        List<Event> events = eventRepository.findAllByDate(date);
+        if (events.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return events;
+    }
+    public List<Event> getAllByLocation(String location) {
+        List<Event> events = eventRepository.findAllByLocation(location);
+        if (events.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return events;
+    }
+    public List<Event> getAllByCategory(String category) {
+        List<Event> events = eventRepository.findAllByCategory(category);
+        if (events.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return events;
+    }
+
 }
