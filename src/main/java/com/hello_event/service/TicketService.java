@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ public class TicketService {
     private final TicketRepository ticketRepository;
 
     public Ticket save(Ticket ticket) {
+        ticket.setPurchaseDate(LocalDateTime.now());
         return ticketRepository.save(ticket);
     }
 

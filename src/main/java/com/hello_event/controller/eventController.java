@@ -4,14 +4,16 @@ package com.hello_event.controller;
 import com.hello_event.exception.DatabaseEmptyException;
 import com.hello_event.model.Event;
 import com.hello_event.service.EventService;
-import com.hello_event.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static org.springframework.security.authorization.AuthorityReactiveAuthorizationManager.hasAuthority;
 
 @RestController
 @RequestMapping("/api/user/event")

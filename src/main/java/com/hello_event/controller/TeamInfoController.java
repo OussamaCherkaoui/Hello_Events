@@ -1,5 +1,6 @@
 package com.hello_event.controller;
 
+import com.hello_event.enums.Role;
 import com.hello_event.exception.DatabaseEmptyException;
 import com.hello_event.model.Event;
 import com.hello_event.model.TeamInfo;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
