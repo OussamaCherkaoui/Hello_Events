@@ -24,17 +24,9 @@ import org.springframework.web.bind.annotation.*;
 public class ContactController {
     private final ContactService contactService;
 
-    @GetMapping("/get-all")
-    public ResponseEntity<?> getAll() {
-        try {
-            var contacts = contactService.getAll();
-            return ResponseEntity.ok(contacts);
-        } catch (DatabaseEmptyException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
 
-    public ResponseEntity<Contact> saveTicket(@RequestBody Contact contact) {
+    @PostMapping
+    public ResponseEntity<Contact> saveContect(@RequestBody Contact contact) {
         Contact savedContact = contactService.save(contact);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedContact);
     }

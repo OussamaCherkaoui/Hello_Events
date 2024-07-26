@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,12 +28,20 @@ public class User implements UserDetails {
     private String email;
     @Column
     private String phone;
+    @Enumerated(EnumType.STRING)
     @Column
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role.toString()));
+        if (role == null) {
+            // Handle the null case, possibly log an error or throw an exception
+            System.out.println("Role is not initialized.");
+            return List.of(); // or return an empty list or default role as needed
+        }
+
+        // Proceed if role is not null
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
