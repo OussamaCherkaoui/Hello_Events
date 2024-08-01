@@ -1,5 +1,6 @@
 package com.hello_event.controller;
 
+import com.hello_event.dto.TicketDTO;
 import com.hello_event.exception.UserNotFoundException;
 import com.hello_event.model.Ticket;
 import com.hello_event.service.TicketService;
@@ -17,10 +18,11 @@ import java.util.List;
 public class ticketController {
     private final TicketService ticketService;
     @PostMapping
-    public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket) {
-        Ticket savedTicket = ticketService.save(ticket);
+    public ResponseEntity<TicketDTO> saveTicket(@RequestBody TicketDTO ticketDTO) {
+        TicketDTO savedTicket = ticketService.save(ticketDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedTicket);
     }
+
     @GetMapping("/getAllByIdUser/{id}")
     public ResponseEntity<?> getAllTicketsById(@PathVariable Long id) {
         try {
@@ -30,4 +32,5 @@ public class ticketController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
 }

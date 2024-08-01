@@ -5,6 +5,7 @@ import com.hello_event.exception.UserNotFoundException;
 import com.hello_event.model.User;
 import com.hello_event.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
