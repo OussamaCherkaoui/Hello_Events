@@ -2,6 +2,7 @@ package com.hello_event.controller;
 
 import com.hello_event.enums.Role;
 import com.hello_event.exception.DatabaseEmptyException;
+import com.hello_event.model.Contact;
 import com.hello_event.model.Event;
 import com.hello_event.model.TeamInfo;
 import com.hello_event.service.TeamInfoService;
@@ -11,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,4 +33,5 @@ public class TeamInfoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
 }

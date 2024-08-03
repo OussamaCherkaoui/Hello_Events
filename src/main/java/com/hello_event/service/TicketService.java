@@ -1,7 +1,9 @@
 package com.hello_event.service;
 
 
+import com.hello_event.dto.TicketDTO;
 import com.hello_event.exception.DatabaseEmptyException;
+import com.hello_event.mapper.TicketMapper;
 import com.hello_event.model.Ticket;
 import com.hello_event.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TicketService {
     private final TicketRepository ticketRepository;
+    private final TicketMapper ticketMapper;
 
-    public Ticket save(Ticket ticket) {
+    public TicketDTO save(TicketDTO ticketDTO) {
+        Ticket ticket = ticketMapper.toEntity(ticketDTO);
         ticket.setPurchaseDate(LocalDateTime.now());
-        return ticketRepository.save(ticket);
+        ticket = ticketRepository.save(ticket);
+        return ticketMapper.toDTO(ticket);
     }
 
     public List<Ticket> getTicketsByIdUser(Long userId) {
@@ -30,4 +35,11 @@ public class TicketService {
         return tickets;
     }
 
+    public List<Ticket> getAllTicket() {
+        List<Ticket> tickets = ticketRepository.findAll();
+        if (tickets.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return tickets;
+    }
 }
