@@ -28,7 +28,15 @@ public class AdminController {
     private final TicketService ticketService;
     private final UserService userService;
 
-
+    @GetMapping("/getAllEvents")
+    public ResponseEntity<?> getAll() {
+        try {
+            List<Event> events = eventService.getAll();
+            return ResponseEntity.ok(events);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     @GetMapping("/get-by-id/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") String id) {
         try {

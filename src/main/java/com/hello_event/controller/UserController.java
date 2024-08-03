@@ -1,6 +1,7 @@
 package com.hello_event.controller;
 
 
+import com.hello_event.config.AuthenticationResponse;
 import com.hello_event.enums.Role;
 import com.hello_event.exception.DatabaseEmptyException;
 import com.hello_event.exception.UserNotFoundException;
@@ -38,30 +39,21 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<AuthenticationResponse> loginUser(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
         );
         User user = userService.getByUsername(authenticationRequest.getUsername());
         final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails,user.getRole());
-        return new ResponseEntity<>(jwt, HttpStatus.OK);
+        return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
     }
 
-    @GetMapping("/get-all")
-    public ResponseEntity<?> getAll() {
-        try {
-            var users = userService.getAll();
-            return ResponseEntity.ok(users);
-        } catch (DatabaseEmptyException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
 
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") String id) {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         try {
-            var user = userService.getById(Long.valueOf(id));
+            var user = userService.getById(id);
             return ResponseEntity.ok(user);
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -70,14 +62,14 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<User> save(@RequestBody User user) {
-        var savedUser = userService.save(user);
+        User savedUser = userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody User userDto) {
         try {
-            var updatedUser = userService.update(userDto);
+            User updatedUser = userService.update(userDto);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedUser);
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -87,9 +79,27 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try {
-            var deletedUser = userService.delete(Long.valueOf(id));
+            User deletedUser = userService.delete(Long.valueOf(id));
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(deletedUser);
         } catch (UserNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @GetMapping("/getIdByUserName/{username}")
+    public ResponseEntity<?> getIdByUserName(@PathVariable("username") String username) {
+        try {
+            User user = userService.getByUsername(username);
+            return ResponseEntity.ok(user.getIdUser());
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @GetMapping("/getUserByIdUser/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable("id") Long id) {
+        try {
+            User user = userService.getById(id);
+            return ResponseEntity.ok(user);
+        } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService {
 
 
     public List<User> getAll() {
-        var users = userRepository.findAll();
+        List<User> users = userRepository.findAll();
         if (users.isEmpty()) {
             throw new DatabaseEmptyException();
         }
